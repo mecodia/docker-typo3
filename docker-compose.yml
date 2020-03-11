@@ -1,7 +1,11 @@
 version: "3"
 services:
   typo3:
-    build: .
+    build:
+      context: .
+      args: 
+        TYPO_VERSION: "10.3.0"
+        PHP_VERSION: "7.4.0-apache-buster"
     ports:
       - "80:80"
     volumes:
@@ -10,6 +14,7 @@ services:
       - uploads:/var/www/html/uploads
     networks:
       - backend
+
   database:
     image: mysql:5.7
     command:
@@ -22,10 +27,24 @@ services:
       - "MYSQL_RANDOM_ROOT_PASSWORD=yes"
     networks:
       - backend
+
+  # For using PostgreSQL instead of MySQL, use the following "database"
+  # service instead:
+  #
+  # database:
+  #   image: postgres:12.1
+  #   environment:
+  #     - "POSTGRES_USER=${POSTGRES_USER:-typo3}"
+  #     - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}"
+  #     - "POSTGRES_DATABASE=${POSTGRES_DATABASE:-typo3}"
+  #   networks:
+  #     - backend
+
 volumes:
   database:
   fileadmin:
   typo3conf:
   uploads:
+
 networks:
   backend:
