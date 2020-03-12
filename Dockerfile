@@ -18,7 +18,6 @@
 
 FROM php:7.4-apache-buster
 LABEL maintainer="mecodia GmbH <it@mecodia.de>"
-ARG TYPO_VERSION=9.5.14
 
 # Install PHP and dependencies
 RUN apt-get update && \
@@ -54,18 +53,20 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /usr/src/*
 
 # Install Typo3
-RUN cd /var/www/html && \
-    wget -nv -O - https://get.typo3.org/${TYPO_VERSION} | tar -xzf - && \
+ARG TYPO_VERSION=9.5.14
+WORKDIR /var/www/html
+RUN wget -nv -O - https://get.typo3.org/${TYPO_VERSION} | tar -xzf - && \
     ln -s typo3_src-* typo3_src && \
     ln -s typo3_src/index.php && \
     ln -s typo3_src/typo3 && \
-    cp typo3/sysext/install/Resources/Private/FolderStructureTemplateFiles/root-htaccess .htaccess && \
     mkdir typo3temp && \
     mkdir typo3conf && \
     mkdir fileadmin && \
     mkdir uploads && \
-    touch FIRST_INSTALL && \
     chown -R www-data. .
+
+# Copy default .htaccess (ln version for typo3 <= 8)
+RUN if [ -f "typo3_src/_.htaccess" ]; then ln -s typo3_src/_.htaccess .htaccess; else cp typo3/sysext/install/Resources/Private/FolderStructureTemplateFiles/root-htaccess .htaccess ; fi
 
 # Configure volumes
 VOLUME /var/www/html/fileadmin

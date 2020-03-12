@@ -15,14 +15,14 @@ Usage
 
 2. After that, simply open `http://localhost/` in your browser to start the TYPO3 install tool.
 
-3. Complete the install tool. When prompted for database credentials, use the environment variables that you've passed to the database container. The hostname is the service name of the docker-compose file (so `database`).
+3. To do the installation, you have to create `/var/www/html/FIRST_INSTALL` (e.g. by running `docker-compose exec typo3 touch /var/www/html/FIRST_INSTALL`)
 
-Available tags
---------------
+4. Complete the install tool. When prompted for database credentials, use the environment variables that you've passed to the database container. The hostname is the service name of the docker-compose file (so `database`).
 
-This repository offers the following image tags:
+Build & publish
+---------------
 
-- `latest` maps to the latest available LTS version
-- `10` and `10` for the latest available version from the `10.*` branch. 
-- `9` for the latest available version from the `9.*` branch.
-- `8` for the latest available version from the `8.*` branch.
+Example:
+
+    docker build . --build-arg TYPO_VERSION=9.5.14 -t mecodia/typo3:9.5.14
+    docker push mecodia/typo3:9.5.14
