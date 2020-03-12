@@ -53,7 +53,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /usr/src/*
 
 # Install Typo3
-ARG TYPO_VERSION=9.5.14
+ARG TYPO_VERSION=9
 WORKDIR /var/www/html
 RUN wget -nv -O - https://get.typo3.org/${TYPO_VERSION} | tar -xzf - && \
     ln -s typo3_src-* typo3_src && \
