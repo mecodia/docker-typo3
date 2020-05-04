@@ -26,7 +26,9 @@ Usage
 Build & Publish
 ---------------
 
-Example:
+See the example workflow in `publish.sh`.
 
-    docker build . --build-arg TYPO_VERSION=9.5.14 -t mecodia/typo3:9.5.14
-    docker push mecodia/typo3:9.5.14
+Usage:
+
+    ./publish.sh 9.5.16	
+
