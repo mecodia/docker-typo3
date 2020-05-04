@@ -19,6 +19,9 @@
 FROM php:7.4-apache-buster
 LABEL maintainer="mecodia GmbH <it@mecodia.de>"
 
+# Use the default production configuration
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
 # Install PHP and dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
