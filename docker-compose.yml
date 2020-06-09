@@ -3,7 +3,7 @@ services:
   typo3:
     build:
       context: .
-      args: 
+      args:
         TYPO_VERSION: "9"
     ports:
       - "80:80"

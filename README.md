@@ -1,19 +1,17 @@
-TYPO3 Docker Images
-==========================
+# TYPO3 Docker Images
 
 [![Build Status](https://travis-ci.org/mecodia/docker-typo3.svg?branch=master)](https://travis-ci.org/mecodia/docker-typo3)
 [![Docker Pulls](https://img.shields.io/docker/pulls/mecodia/typo3)](https://hub.docker.com/repository/docker/mecodia/typo3)
 
 This repository contains build instructions for simple TYPO3 Docker images. They might not be production grade!
 
-
-Build Arguments
----------------
+## Build Arguments
 
 - TYPO3_VERSION: The typo3 version to build this image with, the default builds the latest version 9
+- REPO_VERSION: The git version of this repository and therefore the Dockerfile
+- PHP_VERSION: The PHP image tag to base this on
 
-Usage
------
+## Usage
 
 1. See the `docker-compose.yml` as an example for usage of this image. You can just do a `docker-compose up` in here.
 
@@ -23,12 +21,10 @@ Usage
 
 4. Complete the install tool. When prompted for database credentials, use the environment variables that you've passed to the database container. The hostname is the service name of the docker-compose file (so `database`).
 
-Build & Publish
----------------
+## Build & Publish
 
 See the example workflow in `publish.sh`.
 
 Usage:
 
-    ./publish.sh 9.5.16	
-
+    ./publish.sh 9.5.16

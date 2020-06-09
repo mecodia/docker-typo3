@@ -1,10 +1,13 @@
 #!/bin/sh
-echo "Building mecodia/typo3 with typo3 version $1"
+REPO_VERSION=$(git describe --always --tags)
+TYPO3_VERSION=$1
+PHP_VERSION=7.4-apache-buster
+echo "Building mecodia/typo3 $REPO_VERSION with typo3 v$TYPO3_VERSION on $PHP_VERSION"
 echo " - Pulling base image"
-docker pull php:7.4-apache-buster
+docker pull php:$PHP_VERSION
 echo " - Building typo3 image"
-docker build . --build-arg TYPO_VERSION=$1 -t mecodia/typo3:$1
-echo " - Pushing with tag=$1"
-docker push mecodia/typo3:$1
-echo " - Pushing with tag=latest"
-docker push mecodia/typo3:latest
+docker build . --build-arg PHP_VERSION=$PHP_VERSION --build-arg TYPO_VERSION=$TYPO3_VERSION --build-arg BUILD_VERSION=$REPO_VERSION -t mecodia/typo3:$TYPO3_VERSION-$REPO_VERSION -t mecodia/typo3:$TYPO3_VERSION-latest
+echo " - Pushing with tag $TYPO3_VERSION-$REPO_VERSION"
+docker push mecodia/typo3:$TYPO3_VERSION-$REPO_VERSION
+echo " - Pushing with tag $TYPO3_VERSION-latest"
+docker push mecodia/typo3:$TYPO3_VERSION-latest
